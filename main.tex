@@ -1,0 +1,80 @@
+\documentclass{article}
+
+\usepackage{blindtext}
+\usepackage{geometry}
+\geometry{
+ a4paper,
+ total={170mm,257mm},
+ left=20mm,
+ top=20mm,
+}
+\begin{document}
+
+\section{Basics}
+\subsection{Introduction}
+This instruction set is designed for people who want to create operating systems and learn system programming. The main goal is to keep it simple and well documented to avoid undefined behaviours.
+
+\subsection{Registers}
+The instruction set features 17 registers in total. Each register has a size of 64 bits and some of them are \textit{hardwired}.
+\begin{table}[h!]
+\centering
+\begin{tabular} { | p{3cm} | | p{6cm} | p{2cm} |}
+  \hline
+  \multicolumn{3}{|c|}{Registers}\\
+  \hline
+  Mnemonic & Description & Identifier\\
+  \hline
+  zero & Hardwired zero & 0000\\
+  pc & Program counter & 0001\\
+  sb & Stack base & 0010\\
+  sp & Stack pointer & 0011\\
+  tid & Thread ID & 0100\\
+  pgp & Page table pointer & 0101\\
+  thp & Trap handler pointer & 0110\\
+  tca & Trap cause & 0111\\
+  ra & Return address & 1000\\
+  gp1 & General purpose register 1 & 1001\\
+  gp2 & General purpose register 2 & 1010\\
+  gp3 & General purpose register 3 & 1011\\
+  gp4 & General purpose register 4 & 1100\\
+  gp5 & General purpose register 5 & 1101\\
+  gp6 & General purpose register 6 & 1110\\
+  gp7 & General purpose register 7 & 1111\\
+  \hline
+\end{tabular}
+\caption{Registers table}
+\end{table}
+
+\subsection{Instructions}
+\begin{table}[h!]
+\centering
+\begin{tabular} { | p{2cm} | | p{2cm} | p{3cm} | | p{3cm} | | p{3cm}| | p{3cm} |}
+  \hline
+  \multicolumn{6}{|c|}{LQ}\\
+  \hline
+  32-25 & 24-21 & 20-17 & 16-13 & 12-9 & 8-1\\
+  \hline
+  Opcode & Operand & First argument & Second Argument & Third argument & N/A\\
+  00000000 & 0100 & Destination register & Second Argument & Third argument & N/A\\
+  \hline
+\end{tabular}
+\caption{Instruction encoding}
+\end{table}
+
+\subsubsection{Instruction encoding}
+Each instruction is 32 bit wide, the cpu works with registers, so for each instruction 2 or more registers are passed to specify the values.
+\begin{table}[h!]
+\centering
+\begin{tabular} { | p{2cm} | | p{2cm} | p{3cm} | | p{3cm} | | p{3cm}| | p{3cm} |}
+  \hline
+  \multicolumn{6}{|c|}{Instruction}\\
+  \hline
+  32-25 & 24-21 & 20-17 & 16-13 & 12-9 & 8-1\\
+  \hline
+  Opcode & Operand & First argument & Second Argument & Third argument & N/A\\
+  \hline
+\end{tabular}
+\caption{Instruction encoding}
+\end{table}
+
+\end{document}
