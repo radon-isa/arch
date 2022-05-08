@@ -25,21 +25,21 @@ The instruction set features 17 registers in total. Each register has a size of 
   Mnemonic & Description & Identifier\\
   \hline
   zero & Hardwired zero & 0000\\
-  pc & Program counter & 0001\\
+  ip & Instruction pointer & 0001\\
   sb & Stack base & 0010\\
   sp & Stack pointer & 0011\\
-  tid & Thread ID & 0100\\
-  pgp & Page table pointer & 0101\\
-  thp & Trap handler pointer & 0110\\
-  tca & Trap cause & 0111\\
-  ra & Return address & 1000\\
-  gp1 & General purpose register 1 & 1001\\
-  gp2 & General purpose register 2 & 1010\\
-  gp3 & General purpose register 3 & 1011\\
-  gp4 & General purpose register 4 & 1100\\
-  gp5 & General purpose register 5 & 1101\\
-  gp6 & General purpose register 6 & 1110\\
-  gp7 & General purpose register 7 & 1111\\
+  pgp & Page table pointer & 0100\\
+  thp & Trap handler pointer & 0101\\
+  ihp & Interrupt handler pointer & 0110\\
+  ra & Return address & 0111\\
+  r1 & General purpose register 1 & 1000\\
+  r2 & General purpose register 2 & 1001\\
+  r3 & General purpose register 3 & 1010\\
+  r4 & General purpose register 4 & 1011\\
+  r5 & General purpose register 5 & 1100\\
+  r6 & General purpose register 6 & 1101\\
+  r7 & General purpose register 7 & 1110\\
+  r8 & General purpose register 8 & 1111\\
   \hline
 \end{tabular}
 \caption{Registers table}
@@ -61,6 +61,14 @@ The instruction set features 17 registers in total. Each register has a size of 
 \caption{Moves \textit{source} into \textit{destination}}
 \end{table}
 
+\section{Traps and interrupts}
+\subsection{Traps}
+Traps are triggered by executing the SYS instruction. The machine will jump to the trap handler pointer, while setting the trap cause special register to the identifier specified in the SYS instruction. You can use traps to transfer control from user mode to kernel mode (e.g. system calls).
+\subsection{Interrupts}
+Interrupts are triggered by external and asynchronous events such as signals from external devices (e.g. keyboard, mouse) and from the didactical environment (such as the debugger or manual interrupt triggers). \\An abstract interrupt controller ensures that interrupt requests are queued in order to be processed in an ordered manner. They have a interrupt cause value in order to be recognized by the interrupt handler.
+\subsection{Exceptions}
+Exceptions are a special case of interrupts, which are triggered by the machine itself when it encounters errors and has to break the normal flow of execution. Check the exceptions table for a complete list of exceptions and interrupt cause values.
 
+\newpage
 
 \end{document}
