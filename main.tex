@@ -66,7 +66,7 @@ Traps are triggered by executing the SYS instruction. The machine will jump to t
 \subsection{Interrupts}
 Interrupts are triggered by external and asynchronous events such as signals from external devices (e.g. keyboard, mouse) and from the didactical environment (such as the debugger or manual interrupt triggers). \\An abstract interrupt controller ensures that interrupt requests are queued in order to be processed in an ordered manner. They have a interrupt cause value in order to be recognized by the interrupt handler.
 \subsection{Exceptions}
-Exceptions are a special case of interrupts, which are triggered by the machine itself when it encounters errors and has to break the normal flow of execution. Check the exceptions table for a complete list of exceptions and interrupt cause values.
+Exceptions are synchronous interrupts that are triggered by the machine itself when it encounters errors (e.g. invalid instructions, invalid page table) and has to break the normal flow of execution. Check the interrupts and exceptions table for a complete list cause values.
 
 \newpage
 
