@@ -63,14 +63,14 @@ The instruction set features 17 registers in total. Each register has a size of 
 
 \begin{table}[h!]
   \centering
-  \begin{tabular} { | p{2cm} | | p{2cm} | p{2cm} |}
+  \begin{tabular} { | p{2cm} | | p{2cm} | p{2,5cm} | | p{2cm} |}
     \hline
-    \multicolumn{3}{|c|}{MOVRI}\\
+    \multicolumn{4}{|c|}{MOVRI}\\
     \hline
-    0x1 & 0x2 & 0x3\\
+    0x1 & \multicolumn{2}{|c|}{0x2} & 0x3\\
     \hline
-    Opcode & Destination & Source\\
-    00000001 & register & immediate\\
+    Opcode & Destination & Immediate Size & Source\\
+    00000001 & register & operand & immediate\\
     \hline
   \end{tabular}
   \caption{Moves \textit{source} into \textit{destination}}
@@ -108,14 +108,14 @@ The instruction set features 17 registers in total. Each register has a size of 
 
 \begin{table}[h!]
   \centering
-  \begin{tabular} { | p{2cm} | | p{2cm} | p{2cm} |}
+  \begin{tabular} { | p{2cm} | | p{2cm} | p{2,5cm} | | p{2cm} |}
     \hline
-    \multicolumn{3}{|c|}{MOVMI}\\
+    \multicolumn{4}{|c|}{MOVMI}\\
     \hline
-    0x1 & 0x2 & 0x3\\
+    0x1 & \multicolumn{2}{|c|}{0x2} & 0x3\\
     \hline
-    Opcode & Destination & Source\\
-    00000100 & address & immediate\\
+    Opcode & Destination & Immediate Size & Source\\
+    00000001 & address & operand & immediate\\
     \hline
   \end{tabular}
   \caption{Moves \textit{source} in memory at \textit{destination}}
@@ -133,7 +133,7 @@ The instruction set features 17 registers in total. Each register has a size of 
     00000101 & address & address\\
     \hline
   \end{tabular}
-  \caption{Moves the content in memory at \textit{source} at \textit{destination}}
+  \caption{Moves the content from \textit{source} into \textit{destination} in memory}
 \end{table}
 
 \section{Traps and interrupts}
@@ -159,6 +159,7 @@ Exceptions are synchronous interrupts that are triggered by the machine itself w
   \hline
   
 \end{tabular}
+
 \caption{Interrupts and exceptions cause values}
 \end{table}
 
