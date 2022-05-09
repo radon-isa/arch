@@ -3,10 +3,10 @@
 \usepackage{blindtext}
 \usepackage{geometry}
 \geometry{
- a4paper,
- total={170mm,257mm},
- left=20mm,
- top=20mm,
+  a4paper,
+  total={170mm,257mm},
+  left=20mm,
+  top=20mm,
 }
 \begin{document}
 
@@ -17,48 +17,123 @@ This instruction set is designed for people who want to create operating systems
 \subsection{Registers}
 The instruction set features 17 registers in total. Each register has a size of 64 bits and some of them are \textit{hardwired}.
 \begin{table}[h!]
-\centering
-\begin{tabular} { | p{3cm} | | p{6cm} | p{2cm} |}
-  \hline
-  \multicolumn{3}{|c|}{Registers}\\
-  \hline
-  Mnemonic & Description & Identifier\\
-  \hline
-  zero & Hardwired zero & 0000\\
-  ip & Instruction pointer & 0001\\
-  sb & Stack base & 0010\\
-  sp & Stack pointer & 0011\\
-  pgp & Page table pointer & 0100\\
-  thp & Trap handler pointer & 0101\\
-  ihp & Interrupt handler pointer & 0110\\
-  ra & Return address & 0111\\
-  r1 & General purpose register 1 & 1000\\
-  r2 & General purpose register 2 & 1001\\
-  r3 & General purpose register 3 & 1010\\
-  r4 & General purpose register 4 & 1011\\
-  r5 & General purpose register 5 & 1100\\
-  r6 & General purpose register 6 & 1101\\
-  r7 & General purpose register 7 & 1110\\
-  r8 & General purpose register 8 & 1111\\
-  \hline
-\end{tabular}
-\caption{Registers table}
+  \centering
+  \begin{tabular} { | p{3cm} | | p{6cm} | p{2cm} |}
+    \hline
+    \multicolumn{3}{|c|}{Registers}\\
+    \hline
+    Mnemonic & Description & Identifier\\
+    \hline
+    zero & Hardwired zero & 0000\\
+    ip & Instruction pointer & 0001\\
+    sb & Stack base & 0010\\
+    sp & Stack pointer & 0011\\
+    pgp & Page table pointer & 0100\\
+    thp & Trap handler pointer & 0101\\
+    ihp & Interrupt handler pointer & 0110\\
+    ra & Return address & 0111\\
+    r1 & General purpose register 1 & 1000\\
+    r2 & General purpose register 2 & 1001\\
+    r3 & General purpose register 3 & 1010\\
+    r4 & General purpose register 4 & 1011\\
+    r5 & General purpose register 5 & 1100\\
+    r6 & General purpose register 6 & 1101\\
+    r7 & General purpose register 7 & 1110\\
+    r8 & General purpose register 8 & 1111\\
+    \hline
+  \end{tabular}
+  \caption{Registers table}
 \end{table}
 
 \subsection{Instructions}
 \begin{table}[h!]
-\centering
-\begin{tabular} { | p{2cm} | | p{2cm} | p{2cm} |}
-  \hline
-  \multicolumn{3}{|c|}{MOVRR}\\
-  \hline
-  0x1 & \multicolumn{2}{|c|}{0x2}\\
-  \hline
-  Opcode & Destination & Source\\
-  00000000 & register & register\\
-  \hline
-\end{tabular}
-\caption{Moves \textit{source} into \textit{destination}}
+  \centering
+  \begin{tabular} { | p{2cm} | | p{2cm} | p{2cm} |}
+    \hline
+    \multicolumn{3}{|c|}{MOVRR}\\
+    \hline
+    0x1 & \multicolumn{2}{|c|}{0x2}\\
+    \hline
+    Opcode & Destination & Source\\
+    00000000 & register & register\\
+    \hline
+  \end{tabular}
+  \caption{Moves \textit{source} into \textit{destination}}
+\end{table}
+
+\begin{table}[h!]
+  \centering
+  \begin{tabular} { | p{2cm} | | p{2cm} | p{2cm} |}
+    \hline
+    \multicolumn{3}{|c|}{MOVRI}\\
+    \hline
+    0x1 & 0x2 & 0x3\\
+    \hline
+    Opcode & Destination & Source\\
+    00000001 & register & immediate\\
+    \hline
+  \end{tabular}
+  \caption{Moves \textit{source} into \textit{destination}}
+\end{table}
+
+\begin{table}[h!]
+  \centering
+  \begin{tabular} { | p{2cm} | | p{2cm} | p{2cm} |}
+    \hline
+    \multicolumn{3}{|c|}{MOVRM}\\
+    \hline
+    0x1 & 0x2 & 0x3\\
+    \hline
+    Opcode & Destination & Source\\
+    00000010 & register & address\\
+    \hline
+  \end{tabular}
+  \caption{Moves the content at \textit{source} into \textit{destination}}
+\end{table}
+
+\begin{table}[h!]
+  \centering
+  \begin{tabular} { | p{2cm} | | p{2cm} | p{2cm} |}
+    \hline
+    \multicolumn{3}{|c|}{MOVMR}\\
+    \hline
+    0x1 & 0x2 & 0x3\\
+    \hline
+    Opcode & Destination & Source\\
+    00000011 & address & register\\
+    \hline
+  \end{tabular}
+  \caption{Moves the content of \textit{source} in memory at \textit{destination}}
+\end{table}
+
+\begin{table}[h!]
+  \centering
+  \begin{tabular} { | p{2cm} | | p{2cm} | p{2cm} |}
+    \hline
+    \multicolumn{3}{|c|}{MOVMI}\\
+    \hline
+    0x1 & 0x2 & 0x3\\
+    \hline
+    Opcode & Destination & Source\\
+    00000100 & address & immediate\\
+    \hline
+  \end{tabular}
+  \caption{Moves \textit{source} in memory at \textit{destination}}
+\end{table}
+
+\begin{table}[h!]
+  \centering
+  \begin{tabular} { | p{2cm} | | p{2cm} | p{2cm} |}
+    \hline
+    \multicolumn{3}{|c|}{MOVMM}\\
+    \hline
+    0x1 & 0x2 & 0x3\\
+    \hline
+    Opcode & Destination & Source\\
+    00000101 & address & address\\
+    \hline
+  \end{tabular}
+  \caption{Moves the content in memory at \textit{source} at \textit{destination}}
 \end{table}
 
 \section{Traps and interrupts}
