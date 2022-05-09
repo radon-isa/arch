@@ -1,6 +1,7 @@
 \documentclass{article}
 
 \usepackage{blindtext}
+\usepackage{float}
 \usepackage{geometry}
 \geometry{
   a4paper,
@@ -46,7 +47,7 @@ The instruction set features 17 registers in total. Each register has a size of 
 \end{table}
 
 \subsection{Instructions}
-\begin{table}[h!]
+\begin{table}[H]
   \centering
   \begin{tabular} { | p{2cm} | | p{2cm} | p{2cm} |}
     \hline
@@ -61,7 +62,7 @@ The instruction set features 17 registers in total. Each register has a size of 
   \caption{Moves \textit{source} into \textit{destination}}
 \end{table}
 
-\begin{table}[h!]
+\begin{table}[H]
   \centering
   \begin{tabular} { | p{2cm} | | p{2cm} | p{2,5cm} | | p{2cm} |}
     \hline
@@ -76,64 +77,514 @@ The instruction set features 17 registers in total. Each register has a size of 
   \caption{Moves \textit{source} into \textit{destination}}
 \end{table}
 
-\begin{table}[h!]
+\begin{table}[H]
   \centering
-  \begin{tabular} { | p{2cm} | | p{2cm} | p{2cm} |}
+  \begin{tabular} { | p{2cm} | | p{2cm} | | p{2cm} | | p{2cm} | | p{3,5cm} | }
     \hline
-    \multicolumn{3}{|c|}{MOVRM}\\
+    \multicolumn{5}{|c|}{MOVRM}\\
     \hline
-    0x1 & 0x2 & 0x3\\
+    0x1 & \multicolumn{2}{c||}{0x2} & 0x3-0x6 & 0x7-0x9 (optional)\\
     \hline
-    Opcode & Destination & Source\\
-    00000010 & register & address\\
+    Opcode & Destination & Operands & Source & Offset\\
+    00000010 & register & operands & address & immediate\\
     \hline
   \end{tabular}
   \caption{Moves the content at \textit{source} into \textit{destination}}
 \end{table}
 
-\begin{table}[h!]
+\begin{table}[H]
   \centering
-  \begin{tabular} { | p{2cm} | | p{2cm} | p{2cm} |}
+  \begin{tabular} { | p{2cm} | | p{2cm} | | p{2cm} | | p{2cm} | | p{3,5cm} | }
     \hline
-    \multicolumn{3}{|c|}{MOVMR}\\
+    \multicolumn{5}{|c|}{MOVMR}\\
     \hline
-    0x1 & 0x2 & 0x3\\
+    0x1 & \multicolumn{2}{c||}{0x2} & 0x3-0x6 & 0x7-0x9 (optional)\\
     \hline
-    Opcode & Destination & Source\\
-    00000011 & address & register\\
+    Opcode & Source & Operands & Destination & Offset\\
+    00000011 & register & operands & address & immediate\\
     \hline
   \end{tabular}
   \caption{Moves the content of \textit{source} in memory at \textit{destination}}
 \end{table}
 
-\begin{table}[h!]
+\begin{table}[H]
+  \centering
+  \begin{tabular} { | p{2cm} | | p{2cm} | p{2cm} |}
+    \hline
+    \multicolumn{3}{|c|}{ADDRR}\\
+    \hline
+    0x1 & \multicolumn{2}{|c|}{0x2}\\
+    \hline
+    Opcode & Destination & Source\\
+    00000110 & register & register\\
+    \hline
+  \end{tabular}
+  \caption{Adds the content of \textit{source} to \textit{destination}}
+\end{table}
+
+\begin{table}[H]
   \centering
   \begin{tabular} { | p{2cm} | | p{2cm} | p{2,5cm} | | p{2cm} |}
     \hline
-    \multicolumn{4}{|c|}{MOVMI}\\
+    \multicolumn{4}{|c|}{ADDRI}\\
     \hline
     0x1 & \multicolumn{2}{|c|}{0x2} & 0x3\\
     \hline
     Opcode & Destination & Immediate Size & Source\\
-    00000001 & address & operand & immediate\\
+    00000111 & register & operand & immediate\\
     \hline
   \end{tabular}
-  \caption{Moves \textit{source} in memory at \textit{destination}}
+  \caption{Adds \textit{source} to \textit{destination}}
 \end{table}
 
-\begin{table}[h!]
+\begin{table}[H]
   \centering
   \begin{tabular} { | p{2cm} | | p{2cm} | p{2cm} |}
     \hline
-    \multicolumn{3}{|c|}{MOVMM}\\
+    \multicolumn{3}{|c|}{ADDRM}\\
     \hline
     0x1 & 0x2 & 0x3\\
     \hline
     Opcode & Destination & Source\\
-    00000101 & address & address\\
+    00001000 & register & address\\
     \hline
   \end{tabular}
-  \caption{Moves the content from \textit{source} into \textit{destination} in memory}
+  \caption{Adds the content at \textit{source} in memory to \textit{destination}}
+\end{table}
+
+\begin{table}[H]
+  \centering
+  \begin{tabular} { | p{2cm} | | p{2cm} | p{2cm} |}
+    \hline
+    \multicolumn{3}{|c|}{ADDMR}\\
+    \hline
+    0x1 & 0x2 & 0x3\\
+    \hline
+    Opcode & Destination & Source\\
+    00001001 & address & register\\
+    \hline
+  \end{tabular}
+  \caption{Adds the content of \textit{source} to memory at \textit{destination}}
+\end{table}
+
+\begin{table}[H]
+  \centering
+  \begin{tabular} { | p{2cm} | | p{2cm} | p{2,5cm} | | p{2cm} |}
+    \hline
+    \multicolumn{4}{|c|}{ADDMI}\\
+    \hline
+    0x1 & \multicolumn{2}{|c|}{0x2} & 0x3\\
+    \hline
+    Opcode & Destination & Immediate Size & Source\\
+    00001010 & address & operand & immediate\\
+    \hline
+  \end{tabular}
+  \caption{Adds \textit{source} to memory at \textit{destination}}
+\end{table}
+
+\begin{table}[H]
+  \centering
+  \begin{tabular} { | p{2cm} | | p{2cm} | p{2cm} |}
+    \hline
+    \multicolumn{3}{|c|}{ADDMM}\\
+    \hline
+    0x1 & 0x2 & 0x3\\
+    \hline
+    Opcode & Destination & Source\\
+    00001011 & address & address\\
+    \hline
+  \end{tabular}
+  \caption{Adds the content from \textit{source} to \textit{destination} in memory}
+\end{table}
+
+\begin{table}[H]
+  \centering
+  \begin{tabular} { | p{2cm} | | p{2cm} | p{2cm} |}
+    \hline
+    \multicolumn{3}{|c|}{SUBRR}\\
+    \hline
+    0x1 & \multicolumn{2}{|c|}{0x2}\\
+    \hline
+    Opcode & Destination & Source\\
+    00001100 & register & register\\
+    \hline
+  \end{tabular}
+  \caption{Subtracts the content of \textit{source} to \textit{destination}}
+\end{table}
+
+\begin{table}[H]
+  \centering
+  \begin{tabular} { | p{2cm} | | p{2cm} | p{2,5cm} | | p{2cm} |}
+    \hline
+    \multicolumn{4}{|c|}{SUBRI}\\
+    \hline
+    0x1 & \multicolumn{2}{|c|}{0x2} & 0x3\\
+    \hline
+    Opcode & Destination & Immediate Size & Source\\
+    00001101 & register & operand & immediate\\
+    \hline
+  \end{tabular}
+  \caption{Subtracts \textit{source} to \textit{destination}}
+\end{table}
+
+\begin{table}[H]
+  \centering
+  \begin{tabular} { | p{2cm} | | p{2cm} | p{2cm} |}
+    \hline
+    \multicolumn{3}{|c|}{SUBRM}\\
+    \hline
+    0x1 & 0x2 & 0x3\\
+    \hline
+    Opcode & Destination & Source\\
+    00001110 & register & address\\
+    \hline
+  \end{tabular}
+  \caption{Subtracts the content at \textit{source} in memory to \textit{destination}}
+\end{table}
+
+\begin{table}[H]
+  \centering
+  \begin{tabular} { | p{2cm} | | p{2cm} | p{2cm} |}
+    \hline
+    \multicolumn{3}{|c|}{SUBMR}\\
+    \hline
+    0x1 & 0x2 & 0x3\\
+    \hline
+    Opcode & Destination & Source\\
+    00001111 & address & register\\
+    \hline
+  \end{tabular}
+  \caption{Subtracts the content of \textit{source} to memory at \textit{destination}}
+\end{table}
+
+\begin{table}[H]
+  \centering
+  \begin{tabular} { | p{2cm} | | p{2cm} | p{2,5cm} | | p{2cm} |}
+    \hline
+    \multicolumn{4}{|c|}{SUBMI}\\
+    \hline
+    0x1 & \multicolumn{2}{|c|}{0x2} & 0x3\\
+    \hline
+    Opcode & Destination & Immediate Size & Source\\
+    0010000 & address & operand & immediate\\
+    \hline
+  \end{tabular}
+  \caption{Subtracts \textit{source} to memory at \textit{destination}}
+\end{table}
+
+\begin{table}[H]
+  \centering
+  \begin{tabular} { | p{2cm} | | p{2cm} | p{2cm} |}
+    \hline
+    \multicolumn{3}{|c|}{SUBMM}\\
+    \hline
+    0x1 & 0x2 & 0x3\\
+    \hline
+    Opcode & Destination & Source\\
+    00010001 & address & address\\
+    \hline
+  \end{tabular}
+  \caption{Subracts the content from \textit{source} to \textit{destination} in memory}
+\end{table}
+
+\begin{table}[H]
+  \centering
+  \begin{tabular} { | p{2cm} | | p{2cm} | p{2cm} |}
+    \hline
+    \multicolumn{3}{|c|}{MULRR}\\
+    \hline
+    0x1 & \multicolumn{2}{|c|}{0x2}\\
+    \hline
+    Opcode & Destination & Source\\
+    00010010 & register & register\\
+    \hline
+  \end{tabular}
+  \caption{Multiplicates the content of \textit{destination} times the content of \textit{source}}
+\end{table}
+
+\begin{table}[H]
+  \centering
+  \begin{tabular} { | p{2cm} | | p{2cm} | p{2,5cm} | | p{2cm} |}
+    \hline
+    \multicolumn{4}{|c|}{MULRI}\\
+    \hline
+    0x1 & \multicolumn{2}{|c|}{0x2} & 0x3\\
+    \hline
+    Opcode & Destination & Immediate Size & Source\\
+    00010011 & register & operand & immediate\\
+    \hline
+  \end{tabular}
+  \caption{Multiplicates the content of \textit{destination} times \textit{source}}
+\end{table}
+
+\begin{table}[H]
+  \centering
+  \begin{tabular} { | p{2cm} | | p{2cm} | p{2cm} |}
+    \hline
+    \multicolumn{3}{|c|}{MULRM}\\
+    \hline
+    0x1 & 0x2 & 0x3\\
+    \hline
+    Opcode & Destination & Source\\
+    00010100 & register & address\\
+    \hline
+  \end{tabular}
+  \caption{Multiplicates the content of \textit{destination} times the content in memory at \textit{source}}
+\end{table}
+
+\begin{table}[H]
+  \centering
+  \begin{tabular} { | p{2cm} | | p{2cm} | p{2cm} |}
+    \hline
+    \multicolumn{3}{|c|}{MULMR}\\
+    \hline
+    0x1 & 0x2 & 0x3\\
+    \hline
+    Opcode & Destination & Source\\
+    00010101 & address & register\\
+    \hline
+  \end{tabular}
+  \caption{Multiplicates the content in memory at \textit{destination} times the content of \textit{source}}
+\end{table}
+
+\begin{table}[H]
+  \centering
+  \begin{tabular} { | p{2cm} | | p{2cm} | p{2,5cm} | | p{2cm} |}
+    \hline
+    \multicolumn{4}{|c|}{MULMI}\\
+    \hline
+    0x1 & \multicolumn{2}{|c|}{0x2} & 0x3\\
+    \hline
+    Opcode & Destination & Immediate Size & Source\\
+    00010110 & address & operand & immediate\\
+    \hline
+  \end{tabular}
+  \caption{Multiplicates the content in memory at \textit{destination} times \textit{source}}
+\end{table}
+
+\begin{table}[H]
+  \centering
+  \begin{tabular} { | p{2cm} | | p{2cm} | p{2cm} |}
+    \hline
+    \multicolumn{3}{|c|}{MULMM}\\
+    \hline
+    0x1 & 0x2 & 0x3\\
+    \hline
+    Opcode & Destination & Source\\
+    00010111 & address & address\\
+    \hline
+  \end{tabular}
+  \caption{Multiplicates the content in memory at \textit{destination} times  the content in memory at \textit{source}}
+\end{table}
+
+\begin{table}[H]
+  \centering
+  \begin{tabular} { | p{2cm} | | p{2cm} | p{2,5cm} |}
+    \hline
+    \multicolumn{3}{|c|}{SRR}\\
+    \hline
+    0x1 & 0x2 & 0x3\\
+    \hline
+    Opcode & Destination & Source\\
+    00011000 & register & special register\\
+    \hline
+  \end{tabular}
+  \caption{Reads the content of the special register \textit{source} into the register \textit{destination}}
+\end{table}
+
+\begin{table}[H]
+  \centering
+  \begin{tabular} { | p{2cm} | | p{2cm} |}
+    \hline
+    \multicolumn{2}{|c|}{JMP}\\
+    \hline
+    0x1 & 0x2\\
+    \hline
+    Opcode & Address\\
+    00011001 & address\\
+    \hline
+  \end{tabular}
+  \caption{Sets the \textit{instruction pointer} to \textit{address}}
+\end{table}
+
+\begin{table}[H]
+  \centering
+  \begin{tabular} { | p{2cm} | | p{2cm} | | p{2cm} | | p{2cm} |}
+    \hline
+    \multicolumn{4}{|c|}{JEQ}\\
+    \hline
+    0x1 & 0x2 & \multicolumn{2}{|c|}{0x3}\\
+    \hline
+    Opcode & Address & Term 1 & Term 2\\
+    00011010 & address & register & register \\
+    \hline
+  \end{tabular}
+  \caption{Sets the \textit{instruction pointer} to \textit{address} if the content of \textit{term 1} is equal to the content of \textit{term 2}}
+\end{table}
+
+\begin{table}[H]
+  \centering
+  \begin{tabular} { | p{2cm} | | p{2cm} | | p{2cm} | | p{2cm} |}
+    \hline
+    \multicolumn{4}{|c|}{JNE}\\
+    \hline
+    0x1 & 0x2 & \multicolumn{2}{|c|}{0x3}\\
+    \hline
+    Opcode & Address & Term 1 & Term 2\\
+    00011011 & address & register & register \\
+    \hline
+  \end{tabular}
+  \caption{Sets the \textit{instruction pointer} to \textit{address} if the content of \textit{term 1} is not equal to the content of \textit{term 2}}
+\end{table}
+
+\begin{table}[H]
+  \centering
+  \begin{tabular} { | p{2cm} | | p{2cm} | | p{2cm} | | p{2cm} |}
+    \hline
+    \multicolumn{4}{|c|}{JGT}\\
+    \hline
+    0x1 & 0x2 & \multicolumn{2}{|c|}{0x3}\\
+    \hline
+    Opcode & Address & Term 1 & Term 2\\
+    00011100 & address & register & register \\
+    \hline
+  \end{tabular}
+  \caption{Sets the \textit{instruction pointer} to \textit{address} if the content of \textit{term 1} is greater than the content of \textit{term 2}}
+\end{table}
+
+\begin{table}[H]
+  \centering
+  \begin{tabular} { | p{2cm} | | p{2cm} | | p{2cm} | | p{2cm} |}
+    \hline
+    \multicolumn{4}{|c|}{JLT}\\
+    \hline
+    0x1 & 0x2 & \multicolumn{2}{|c|}{0x3}\\
+    \hline
+    Opcode & Address & Term 1 & Term 2\\
+    00011101 & address & register & register \\
+    \hline
+  \end{tabular}
+  \caption{Sets the \textit{instruction pointer} to \textit{address} if the content of \textit{term 1} is less than the content of \textit{term 2}}
+\end{table}
+
+\begin{table}[H]
+  \centering
+  \begin{tabular} { | p{2cm} | | p{2cm} | | p{2cm} | | p{2cm} |}
+    \hline
+    \multicolumn{4}{|c|}{JGE}\\
+    \hline
+    0x1 & 0x2 & \multicolumn{2}{|c|}{0x3}\\
+    \hline
+    Opcode & Address & Term 1 & Term 2\\
+    00011110 & address & register & register \\
+    \hline
+  \end{tabular}
+  \caption{Sets the \textit{instruction pointer} to \textit{address} if the content of \textit{term 1} is greater than or equal to the content of \textit{term 2}}
+\end{table}
+
+\begin{table}[H]
+  \centering
+  \begin{tabular} { | p{2cm} | | p{2cm} | | p{2cm} | | p{2cm} |}
+    \hline
+    \multicolumn{4}{|c|}{JLE}\\
+    \hline
+    0x1 & 0x2 & \multicolumn{2}{|c|}{0x3}\\
+    \hline
+    Opcode & Address & Term 1 & Term 2\\
+    00011111 & address & register & register \\
+    \hline
+  \end{tabular}
+  \caption{Sets the \textit{instruction pointer} to \textit{address} if the content of \textit{term 1} is less than or equal to the content of \textit{term 2}}
+\end{table}
+
+\begin{table}[H]
+  \centering
+  \begin{tabular} { | p{2cm} |}
+    \hline
+    \multicolumn{1}{|c|}{HLT}\\
+    \hline
+    0x1\\
+    \hline
+    Opcode\\
+    00100000\\
+    \hline
+  \end{tabular}
+  \caption{Halts the cpu}
+\end{table}
+
+\begin{table}[H]
+  \centering
+  \begin{tabular} { | p{2cm} | | p{3cm} | }
+    \hline
+    \multicolumn{2}{|c|}{INT}\\
+    \hline
+    0x1 & 0x2\\
+    \hline
+    Opcode & Cause\\
+    00100001 & immediate (8 bit)\\
+    \hline
+  \end{tabular}
+  \caption{Triggers an interrupt with \textit{cause} as cause}
+\end{table}
+
+\begin{table}[H]
+  \centering
+  \begin{tabular} { | p{2cm} | | p{3cm} | }
+    \hline
+    \multicolumn{2}{|c|}{SYS}\\
+    \hline
+    0x1 & 0x2\\
+    \hline
+    Opcode & Cause\\
+    00100010 & immediate (8 bit)\\
+    \hline
+  \end{tabular}
+  \caption{Triggers a trap with \textit{cause} as cause}
+\end{table}
+
+\begin{table}[H]
+  \centering
+  \begin{tabular} { | p{2cm} | | p{2cm} | }
+    \hline
+    \multicolumn{2}{|c|}{PUSHR}\\
+    \hline
+    0x1 & 0x2\\
+    \hline
+    Opcode & Source\\
+    00100011 & register\\
+    \hline
+  \end{tabular}
+  \caption{Pushes the content of \textit{source} into the stack}
+\end{table}
+
+\begin{table}[H]
+  \centering
+  \begin{tabular} { | p{2cm} | | p {2,5cm} | | p{2cm} | }
+    \hline
+    \multicolumn{3}{|c|}{PUSHI}\\
+    \hline
+    0x1 & 0x2 & 0x3\\
+    \hline
+    Opcode & Immediate Size & Source\\
+    00100100 & operand & immediate\\
+    \hline
+  \end{tabular}
+  \caption{Pushes \textit{source} into the stack}
+\end{table}
+
+\begin{table}[H]
+  \centering
+  \begin{tabular} { | p{2cm} | | p{2cm} | }
+    \hline
+    \multicolumn{2}{|c|}{POP}\\
+    \hline
+    0x1 & 0x2\\
+    \hline
+    Opcode & Destination\\
+    00100101 & register\\
+    \hline
+  \end{tabular}
+  \caption{Pops out the element on top of the stack into \textit{destination}}
 \end{table}
 
 \section{Traps and interrupts}
@@ -162,7 +613,5 @@ Exceptions are synchronous interrupts that are triggered by the machine itself w
 
 \caption{Interrupts and exceptions cause values}
 \end{table}
-
-
 
 \end{document}
